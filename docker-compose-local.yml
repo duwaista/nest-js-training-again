@@ -1,0 +1,43 @@
+services:
+#    postgres:
+#        image: postgres:16.4
+#        restart: always
+#        container_name: design_system_postgres
+#        environment:
+#            POSTGRES_USER: root
+#            POSTGRES_PASSWORD: 12345
+#            POSTGRES_DB: design_system_postgres
+#        ports:
+#            - "5432:5432"
+#        volumes:
+#            - postgres_data:/var/lib/postgresql/data
+#        entrypoint:
+#            - docker-entrypoint.sh
+#        command:
+#            - postgres
+#        networks:
+#            - test_network
+    
+    app:
+        env_file: '.env'
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: nest-js-test
+        environment:
+            - PORT=${PORT}
+        ports:
+            - '3000:3000'
+#        depends_on:
+#            - postgres
+        volumes:
+            - .:/app
+            - /app/node_modules
+        networks:
+            - test_network
+
+#volumes:
+#    postgres_data:
+        
+networks:
+  test_network:

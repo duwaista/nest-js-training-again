@@ -1,0 +1,23 @@
+services:
+    app:
+        image: ${IMAGE_NAME}:${IMAGE_TAG}
+        container_name: ${APPLICATION_ENVIRONMENT}
+        build:
+            context: .
+            dockerfile: Dockerfile
+        environment:
+            - PORT=${PORT}
+        ports:
+            - '3000:3000'
+        volumes:
+          - .:/app
+          - /app/node_modules
+        networks:
+            - test_network
+        env_file: '.env'
+        logging:
+            driver: gelf
+            options:
+                gelf-address: ${GREYLOG}    
+networks:
+  test_network:
